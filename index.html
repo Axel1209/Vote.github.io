@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter pour votre club de foot préféré</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            margin-top: 20px;
+        }
+        .logo {
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+        .logo:hover {
+            border-color: #007bff;
+        }
+        #results {
+            margin-top: 30px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Votez pour votre club de foot préféré</h1>
+    <div>
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Paris_Saint-Germain_Logo.svg/1200px-Paris_Saint-Germain_Logo.svg.png" alt="PSG Logo" onclick="vote('PSG')" width="100">
+        <img class="logo" src="https://upload.wikimedia.org/wikipedia/fr/thumb/c/c6/Olympique_de_Marseille_logo.svg/1200px-Olympique_de_Marseille_logo.svg.png" alt="OM Logo" onclick="vote('OM')" width="100">
+    </div>
+    <div id="results">
+        <p>Résultats des votes :</p>
+        <p>PSG : <span id="psgVotes">0</span></p>
+        <p>OM : <span id="omVotes">0</span></p>
+    </div>
+
+    <script>
+        // Initialisation des résultats dans le localStorage
+        if (!localStorage.getItem('votes')) {
+            localStorage.setItem('votes', JSON.stringify({ PSG: 0, OM: 0 }));
+        }
+
+        // Fonction pour mettre à jour l'affichage des votes
+        function updateResults() {
+            const votes = JSON.parse(localStorage.getItem('votes'));
+            document.getElementById('psgVotes').textContent = votes.PSG;
+            document.getElementById('omVotes').textContent = votes.OM;
+        }
+
+        // Fonction de vote
+        function vote(club) {
+            const votes = JSON.parse(localStorage.getItem('votes'));
+            votes[club]++;
+            localStorage.setItem('votes', JSON.stringify(votes));
+            updateResults();
+        }
+
+        // Mise à jour initiale des résultats au chargement de la page
+        updateResults();
+    </script>
+</body>
+</html>
